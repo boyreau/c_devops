@@ -1,10 +1,6 @@
 # C DevOps infrastructure
 > A C/C++ project template, a CI workflow and a monitoring stack, ready-to-use.
 
-<!--  [![NPM Version][npm-image]][npm-url] -->
-<!--  [![Build Status][travis-image]][travis-url] -->
-<!--  [![Downloads Stats][npm-downloads]][npm-url] -->
-
 This project is made of 3 core products :
  - A C/C++ project template, with automated building, testing, coverage, and an action that builds, tests and store coverage informations.
  - A self-hosted gitea and an action runner.
@@ -35,7 +31,6 @@ You need docker and docker compose.
 An empty environment file named *.env.empty* can be found at the root of the project.
 Rename it .env, fill the empty fields (mostly tokens and passwords) and you're ready to go.
 
-Linux:
 
 ```sh
 docker compose up -d
@@ -79,7 +74,7 @@ make stats
 
 
 Every push made to the built-in gitea server will run a shipped-in action that automatically generate JSON stats, clean and format them using `jq` and store them in a volume that is fed to filebeat.
-A few seconds after pushing, the new stats will be visible in the dashboard **Average coverage**.
+A few seconds after pushing, the new stats will be visible in Kibana, in the dashboard **Average coverage**.
 
 
 ## Adding support for other languages
@@ -127,7 +122,7 @@ Zozo – Hire me –> bnzlvosnb@mozmail.com
 
 See ``LICENSE`` for informations about the... License ! (Yeah it took me some time to guess, too)
 
-<!-- [https://github.com/yourname/github-link](https://github.com/dbader/) -->
+<!-- [https://github.com/yourname/github-link](https://github.com/zozozoeee/) -->
 
 ## Contributing
 
@@ -136,12 +131,3 @@ See ``LICENSE`` for informations about the... License ! (Yeah it took me some ti
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
 5. Create a new Pull Request
-
-<!-- Markdown link & img dfn's -->
-[npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/datadog-metrics
-[npm-downloads]: https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square
-[travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
-[wiki]: https://github.com/yourname/yourproject/wiki
-
