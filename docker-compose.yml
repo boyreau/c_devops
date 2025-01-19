@@ -195,7 +195,7 @@ services:
     image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
     user: root
     volumes:
-      - coverge:/mnt/coverage:ro
+      - coverage:/mnt/coverage:ro
       - certs:/usr/share/filebeat/certs
       - filebeatdata:/usr/share/filebeat/data
       - "./filebeat/filebeat_ingest_data/:/usr/share/filebeat/ingest_data/"
