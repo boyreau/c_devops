@@ -24,9 +24,9 @@ Linux:
 docker compose up -d
 ```
 
-Go to [![your gitea][http://localhost:3000]] and finish the gitea setup if required.
+Go to [your gitea](http://localhost:3000) and finish the gitea setup if required.
 
-Go to [![your kibana interface][http://localhost:5601]], log in with the account elastic and the password you defined in the env.
+Go to [your kibana interface](http://localhost:5601), log in with the account elastic and the password you defined in the env.
 You can then click the burger menu on the top left, scroll down to stack management, click the *saved objects* menu entry in the **kibana** category and import the dashboards located in *kibana_objects/import_me.ndjson*.
 
 
