@@ -20,7 +20,7 @@ networks:
     name: elastic
     external: false
   gitea:
-    external: false
+    name: gitea
 
 
 services:
@@ -210,22 +210,22 @@ services:
       - LOGSTASH_HOSTS=http://logstash:9600
 
   logstash:
+    image: docker.elastic.co/logstash/logstash:${STACK_VERSION}
     networks:
       - elk
-    depends_on:
-      es:
-        condition: service_healthy
-      kibana:
-        condition: service_healthy
-    image: docker.elastic.co/logstash/logstash:${STACK_VERSION}
-    labels:
-      co.elastic.logs/module: logstash
-    user: root
     volumes:
       - certs:/usr/share/logstash/certs
       - logstashdata:/usr/share/logstash/data
       - "./logstash/logstash_ingest_data/:/usr/share/logstash/ingest_data/"
       - "./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro"
+    depends_on:
+      es:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
+    labels:
+      co.elastic.logs/module: logstash
+    user: root
     environment:
       - xpack.monitoring.enabled=false
       - ELASTIC_USER=elastic
@@ -234,9 +234,9 @@ services:
   
   gitea:
     image: docker.io/gitea/gitea:1.23.1-rootless
-    restart: always
+    networks:
+      - gitea
     volumes:
-      - coverage:/mnt/coverage
       - ./gitea/data:/var/lib/gitea
       - ./gitea/config:/etc/gitea
       - /etc/timezone:/etc/timezone:ro
@@ -244,4 +244,30 @@ services:
     ports:
       - "3000:3000"
       - "2222:2222"
+    environment:
+      - GITEA_RUNNER_REGISTRATION_TOKEN=${GITEA_RUNNER_REGISTRATION_TOKEN}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "localhost:3000"]
+      interval: 10s
+      retries: 3
+      start_period: 30s
+      timeout: 10s
+    restart: always
 
+  act_runner:
+    image: docker.io/gitea/act_runner:0.2.11
+    networks:
+      - gitea
+    volumes:
+      - ./act_runner:/data
+      - coverage:/mnt/coverage
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      gitea:
+        condition: service_healthy
+        restart: true
+    environment:
+      - CONFIG_FILE=/data/config.yaml
+      - GITEA_INSTANCE_URL=http://gitea:3000
+      - GITEA_RUNNER_REGISTRATION_TOKEN=${GITEA_RUNNER_REGISTRATION_TOKEN}
+    restart: always
