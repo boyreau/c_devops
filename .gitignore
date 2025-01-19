@@ -1,0 +1,3 @@
+.env
+gitea/*
+! gitea/data/git/repositories/zo/c.git
