@@ -86,6 +86,9 @@ A few seconds after pushing, the new stats will be visible in the dashboard **Av
 
 Feel free to add templates for other languages.
 
+You should edit the action found in .gitea/workflows/coverage.yaml and configure it to build, test and get coverage about your code.
+The JSON-formatted coverage stats should be put in /mnt/coverage on the action volume.
+
 Here is the JSON format expected by the ELK stats :
 
 ```
