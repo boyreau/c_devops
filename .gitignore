@@ -1,3 +1,4 @@
 .env
 gitea/*
 ! gitea/data/git/repositories/zo/c.git
+act_runner/.runner

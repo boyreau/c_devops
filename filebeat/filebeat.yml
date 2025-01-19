@@ -1,22 +1,24 @@
 filebeat.inputs:
- - type: filestream
-   id: default-filestream
-   paths:
-     - ingest_data/*.log
- - type: filestream
-   id: coverage
-   paths:
-     - /mnt/coverage/*.log
+- type: filestream
+  id: coverage
+  paths:
+    - /mnt/coverage/*.json
+  parsers:
+    - ndjson:
+      overwrite_keys: true
+      add_error_key: true
+      expand_keys: true
 
 
-filebeat.autodiscover:
-  providers:
-    - type: docker
-      hints.enabled: true
+
+# filebeat.autodiscover:
+#   providers:
+#     - type: docker
+#       hints.enabled: true
 
 
-processors:
- - add_docker_metadata: ~
+# processors:
+#  - add_docker_metadata: ~
 
 
 setup.kibana:
