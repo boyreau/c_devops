@@ -12,6 +12,23 @@ This project is made of 3 core products :
 
 ![](header.png)
 
+
+## Setup
+
+This project requires:
+ - docker 27.3.1 (docker compose should be built-in)
+
+The C/C++ project templates requires:
+ - clang 19.1.6
+ - llvm-cov 19.1.6
+ - GNU Make 4.4.1
+ - A solid text editor
+
+Feel free to switch from clang and llvm-cov to gcc and lcov.
+
+Optionnal but useful to process stats client-side:
+ - jq-1.7.1
+
 ## Installation
 
 You need docker and docker compose.
@@ -28,17 +45,6 @@ Go to [your gitea](http://localhost:3000) and finish the gitea setup if required
 
 Go to [your kibana interface](http://localhost:5601), log in with the account elastic and the password you defined in the env.
 You can then click the burger menu on the top left, scroll down to stack management, click the *saved objects* menu entry in the **kibana** category and import the dashboards located in *kibana_objects/import_me.ndjson*.
-
-
-## Setup
-
-This project requires:
- - docker 27.3.1 (docker compose should be built-in)
- - clang 19.1.6
- - llvm-cov 19.1.6
- - jq-1.7.1
- - GNU Make 4.4.1
- - A solid text editor
 
 
 ## Usage example
@@ -74,6 +80,37 @@ make stats
 
 Every push made to the built-in gitea server will run a shipped-in action that automatically generate JSON stats, clean and format them using `jq` and store them in a volume that is fed to filebeat.
 A few seconds after pushing, the new stats will be visible in the dashboard **Average coverage**.
+
+
+## Adding support for other languages
+
+Feel free to add templates for other languages.
+
+Here is the JSON format expected by the ELK stats :
+
+```
+{
+    [
+        {
+            "filename": "/path/to/project/src/file.c" // the 'project' part of the path is processed by kibana to produce some per-project stats.
+            "summary": {
+                "lines": 
+                {
+                    "count": 0,
+                    "covered": 0,
+                    "percent": 100
+                },
+                "branches":{...},
+                "regions":{...},
+                ...
+            }
+        },
+        ...
+    ]
+}
+```
+
+Only `filename` and `summary.lines.{count,covered,percent}` are used by the dashboard at the moment.
 
 
 ## Release History
