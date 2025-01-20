@@ -36,7 +36,7 @@ Rename it .env, fill the empty fields (mostly tokens and passwords) and you're r
 docker compose up -d
 ```
 
-Go to [your gitea](http://localhost:3000) and finish the gitea setup if required.
+Go to [your gitea](http://localhost:3000) and finish the gitea setup if required. You can also take the **gitea/config/app.ini.template** to use my configuration (don't forget to add the various tokens and secrets missing here and there).
 
 Go to [your kibana interface](http://localhost:5601), log in with the account elastic and the password you defined in the env.
 You can then click the burger menu on the top left, scroll down to stack management, click the *saved objects* menu entry in the **kibana** category and import the dashboards located in *kibana_objects/import_me.ndjson*.
