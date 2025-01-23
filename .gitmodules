@@ -1,3 +1,6 @@
 [submodule "C_project_template"]
 	path = C_project_template
 	url = ../C
+[submodule "runner"]
+	path = runner
+	url = ../action-runner.git
